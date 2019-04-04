@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -38,7 +42,7 @@
         </div>
     </nav>
 	<div class="jumbotron">
-		<h2 id="header">Superbad</h2>
+		<h2 id="header">Avengers Endgame</h2>
 	</div>
 	<div class="body">
 	<div class="container">

@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,8 +20,6 @@
 	<title>Sign Up</title>
 </head>
 <body>
-<?php
-?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-4"></div>
@@ -26,20 +27,22 @@
 				<div class="row color signup-row">
 					<div class="col-md-12">
 						<ul id="login-signup-links">
-							<a href="login.php">Log In </a> 
+							<a href="login.php">Log In </a>
 							<span> | </span>
-							<a href="signup.php" class="active-in"> Sign Up</a> 
+							<a href="signup.php" class="active-in"> Sign Up</a>
 						</ul>
-						<label class="label control-label">Full Name</label>
-						<input type="text" class="form-control" name="name" placeholder="Full Name">
-						<label class="label control-label">Username</label>
-						<input type="text" class="form-control" name="user" placeholder="Username">
-						<label class="label control-label">Email</label>
-						<input type="email" class="form-control" name="email" placeholder="Email">
-						<label class="label control-label">Password</label>
-						<input type="password" class="form-control" name="password" placeholder="Password">
-						<a href="home.php"><div class="btn btn-dark btn-login">Sign Up</div></a>
-						<a href="login.php"><p id="password-text" class="text-center">Already have an account?</p></a>
+						<form action="includes/signup.inc.php" method="post">
+							<label class="label control-label">Full Name</label>
+							<input type="text" class="form-control" name="name" placeholder="Full Name">
+							<label class="label control-label">Username</label>
+							<input type="text" class="form-control" name="user" placeholder="Username">
+							<label class="label control-label">Email</label>
+							<input type="email" class="form-control" name="email" placeholder="Email">
+							<label class="label control-label">Password</label>
+							<input type="password" class="form-control" name="password" placeholder="Password">
+							<button type="submit" name="signup-submit" class="btn btn-dark btn-login">Sign Up</button>
+							<a href="login.php"><p id="password-text" class="text-center">Already have an account?</p></a>
+						</form>
 					</div>
 				</div>
 			</div>

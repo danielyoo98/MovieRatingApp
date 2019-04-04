@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+<!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
@@ -13,7 +17,7 @@
 <body>
 
 <?php
-	
+
 ?>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="home.php">Movie Rating App</a>

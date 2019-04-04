@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">	
+	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -22,14 +22,16 @@
 						<ul id="login-signup-links">
 							<a href="login.php" class="active-in">Log In </a>
 							<span> | </span>
-							<a href="signup.php"> Sign Up</a> 
+							<a href="signup.php"> Sign Up</a>
 						</ul>
-						<label class="label control-label">Username</label>
-						<input type="text" class="form-control" name="user" placeholder="Enter your username">
-						<label class="label control-label">Password</label>
-						<input type="password" class="form-control" name="password" placeholder="Enter your password">
-						<a href="home.php"><div class="btn btn-dark btn-login">Log In</div></a>
-						<a href="#"><p id="password-text" class="text-center">Forgot password?</p></a>
+						<form action="includes/login.inc.php" method="post">
+							<label class="label control-label">Username</label>
+							<input type="text" class="form-control" name="user" placeholder="Username">
+							<label class="label control-label">Password</label>
+							<input type="password" class="form-control" name="password" placeholder="Password">
+							<button type="submit" name="login-submit" class="btn btn-dark btn-login">Log In</button>
+							<a href="#"><p id="password-text" class="text-center">Forgot password?</p></a>
+						</form>
 					</div>
 					<div class="col-md-6">
 						<img id="login-page-img" src="images/endgame.jpg">

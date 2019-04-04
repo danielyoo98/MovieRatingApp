@@ -5,9 +5,9 @@ body {
 }
 
 .body {
-    background: 
+    background:
     linear-gradient(
-      rgba(180, 92, 92, 0.45), 
+      rgba(180, 92, 92, 0.45),
       rgba(180, 92, 92, 0.45)
     ),
     url(images/movie-collage.jpg);
@@ -172,7 +172,7 @@ btn2 {
 }
 
 #label {
-    width: 100%; 
+    width: 100%;
     font-size: 30px;
 }
 
@@ -216,7 +216,7 @@ span {
 #password-text {
     margin-top: 25px;
     color: white;
-}	
+}
 
 .form-control {
     border: 0px;
@@ -254,13 +254,13 @@ span {
     background-color: #B22222;
 }
 
-.login-row {
+/* .login-row {
     margin-top: 210px;
 }
 
 .signup-row {
     margin-top: 150px;
-}
+} */
 
 input {
     background-color: white;

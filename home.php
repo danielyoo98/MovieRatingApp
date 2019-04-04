@@ -1,3 +1,7 @@
+<?php
+    session_start();
+?>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,7 +16,7 @@
 <body>
 
 <?php
-  
+
 ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="home.php">Movie Rating App</a>
@@ -34,7 +38,11 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="signup.php">Log Out</a>
+                    <?php
+                        if (isset($_SESSION['user'])) {
+                            echo '<a class="nav-link" href="signup.php">Log Out, '.$_SESSION['user'].'</a>';
+                        }
+                    ?>
                 </li>
             </ul>
         </div>
