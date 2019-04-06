@@ -15,10 +15,6 @@
     <title>Post a Movie</title>
 </head>
 <body>
-
-<?php
-
-?>
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="home.php">Movie Rating App</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,17 +45,17 @@
 		<h2 id="header">Post a Movie</h2>
 	</div>
 	<div class="body">
-		<form class="form">
+		<form class="form" method="POST" enctype="multipart/form-data" action="includes/postamovie.inc.php">
 			<h3 id="label">Upload Picture:</h3><br>
-			<input type="file" id="movie-image-input"><br><br>
+			<input type="file" id="movie-image-input" name="file"><br><br>
 		<div class="form-group">
 			<h3 id="label">Title</h3>
-			<input type="text" class="form-control" id="movie-title-input" placeholder="Enter title">
+			<input type="text" class="form-control" id="movie-title-input" placeholder="Enter title" name="title">
 		</div>
 		<div class="form-group">
-			<h3 id="label">Actors</h3>
+			<h3 id="label">Director</h3>
 			<div id="actor-inputs">
-				<input list="actors" class="form-control" id="movie-actors-input" placeholder="Actor" style="margin-bottom: 0px; border-top: 1px solid black">
+				<input list="actors" class="form-control" id="movie-actors-input" placeholder="Actor" style="margin-bottom: 0px; border-top: 1px solid black" name="director">
 					<datalist id="actors">
 						<option value="Chris Evans">
 						<option value="Samuel L. Jackson">
@@ -72,9 +68,9 @@
 		</div>
 		<div class="form-group">
 			<h3 id="label">Description</h3>
-			<input type="text" class="form-control" id="movie-description-input" placeholder="Description">
+			<input type="text" class="form-control" id="movie-description-input" placeholder="Description" name="desc">
 		</div>
-		<button type="submit" class="btn btn-primary">Submit</button>
+		<button type="submit" class="btn btn-primary" name="submit">Submit</button>
 		<button type="cancel" class="btn btn-danger"><a href="home.php">Cancel</a></button>
 		</form>
 	<div class="jumbotron" id="footer">
@@ -82,3 +78,4 @@
 	</div>
 </body>
 </html>
+
