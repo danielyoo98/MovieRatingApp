@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     // include the database configuration file
     require('db.inc.php');
 
@@ -10,14 +11,10 @@
 
     $director = $_POST['director'];
     $title = $_POST['title'];
-    $_SESSION["path"] = $targetFilePath;
-    $_SESSION["director"] = $director;
-    $_SESSION["title"] = $title;
 
     // if post button is pressed
     if (isset($_POST['submit']) && !empty($_FILES['file']['name']) && !empty($director) && !empty($title)) {
         $desc = $_POST['desc'];
-        $_SESSION["description"] = $desc;
         // allow certain file formats
         $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
         
@@ -28,7 +25,6 @@
                 $insert_director = $db->query("INSERT INTO directors (director_name) VALUES ('$director')");
                 $sql = $db->query("SELECT director_id FROM directors WHERE director_name='$director' LIMIT 1");
                 $result = mysqli_fetch_object($sql);
-                print_r($result->director_id);
                 $insert_movieinfo = $db->query("INSERT INTO movies (movie_image_file, movie_title, director_id, genre, movie_description) VALUES ('$fileName', '$title', '$result->director_id', 'fun', '$desc')");
                 if ($insert_director) {
                     header("Location: ../movielist.php");
