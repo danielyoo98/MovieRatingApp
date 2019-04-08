@@ -27,7 +27,8 @@
                 session_start();
                 $_SESSION['id'] = $row['id'];
                 $_SESSION['user'] = $row['username'];
-                
+                $_SESSION['loggedin'] = true;
+
                 header("Location: ../home.php?login=success");
                 exit();
               } else {
