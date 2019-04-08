@@ -1,4 +1,4 @@
-<?php 
+<?php
     session_start();
     // include the database configuration file
     require('db.inc.php');
@@ -17,7 +17,7 @@
         $desc = $_POST['desc'];
         // allow certain file formats
         $allowTypes = array('jpg', 'png', 'jpeg', 'gif', 'pdf');
-        
+
         if (in_array($fileType, $allowTypes)) {
             // upload file to specified path (i.e. ../images/toy.jpeg)
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {

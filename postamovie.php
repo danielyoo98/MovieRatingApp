@@ -35,7 +35,11 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="signup.php">Log Out</a>
+                    <?php
+                        if (isset($_SESSION['user'])) {
+                            echo '<a class="nav-link" href="signup.php">Log Out, '.$_SESSION['user'].'</a>';
+                        }
+                    ?>
                 </li>
             </ul>
         </div>
