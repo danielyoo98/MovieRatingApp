@@ -51,13 +51,13 @@
             <h3>All Movies</h3>
             <div class="jumbotron scrollbox" id="lists">
                 <?php
+                require('includes/db.inc.php');
                 $result = $db->query("SELECT movie_image_file, movie_title, movie_description FROM movies");
                 $movies = array();
-                echo mysqli_num_rows($result);
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
                         $movie = new stdClass();
-                        $movie->imgPath = $row["movie_image_file"];
+                        $movie->imgPath = "images/".$row["movie_image_file"];
                         $movie->title = $row["movie_title"];
                         $movie->genre = "Action";
                         $movie->description = $row["movie_description"];
