@@ -6,5 +6,6 @@ function addActorInput() {
     inputField.setAttribute("class", "form-control");
     inputField.setAttribute("id", "movie-actors-input");
     inputField.setAttribute("placeholder", "Actor");
+    inputField.setAttribute("name", "actor[]");
     actorInputs.append(inputField);
 }

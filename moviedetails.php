@@ -1,5 +1,10 @@
 <?php
-  session_start();
+    session_start();
+    if (!(isset($_SESSION['loggedin'])) || !($_SESSION['loggedin'] == true)) {
+        header("Location: ../login.php?error=signin");
+        exit();
+    }
+    $_SESSION['movie_id'] = $_GET['role'];
 ?>
 <!DOCTYPE html>
 <html>
@@ -36,13 +41,36 @@
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="signup.php">Log Out</a>
+                    <?php
+                        if (isset($_SESSION['user'])) {
+                            echo '<a class="nav-link" href="signup.php">Log Out, '.$_SESSION['user'].'</a>';
+                        }
+                    ?>
                 </li>
             </ul>
         </div>
     </nav>
 	<div class="jumbotron">
-		<h2 id="header">Avengers Endgame</h2>
+        <?php
+            require('includes/db.inc.php');
+            $movie_id = $_SESSION['movie_id'];
+            $result = $db->query("SELECT movie_image_file, movie_title, director_id, genre, movie_description FROM movies WHERE movie_id = $movie_id");
+            if (mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                $movie = new stdClass();
+                $movie->imgPath = "images/".$row["movie_image_file"];
+                $movie->title = $row["movie_title"];
+                $director_id = $row["director_id"];
+                $movie->genre = $row["genre"];
+                $movie->description = $row["movie_description"];
+                $result2 = $db->query("SELECT director_name FROM directors WHERE director_id = $director_id");
+                if (mysqli_num_rows($result2) > 0) {
+                    $row = mysqli_fetch_assoc($result2);
+                    $movie->director = $row["director_name"];
+                }
+            }
+        ?>
+		<h2 id="header"><?php echo $movie->title ?></h2>
 	</div>
 	<div class="body">
 	<div class="container">
@@ -50,12 +78,30 @@
 			<img src="images/avengers.jpg" width="200px" height="200px">
 		</div>
 		<div class="info">
+            <h3>Director</h3>
+			<div class="director">
+                <p><?php echo $movie->director ?></p>
+			</div>
+
 			<h3>Actors</h3>
 			<div class="actors">
-				<li><a id="actor" href="#">Robert Downey Junior</a></li>
-				<li><a id="actor" href="#">Chris Evans</a></li>
-				<li><a id="actor" href="#">Chris Hemsworth</a></li>
-				<li><a id="actor" href="#">Scarlett Johansson</a></li>
+                <?php
+                require('includes/db.inc.php');
+                $result = $db->query("SELECT actor_id FROM actors_movies WHERE movie_id = $movie_id");
+                mysqli_num_rows($result);
+                $row = mysqli_fetch_assoc($result);
+                $actor_id = $row['actor_id'];
+                $result = $db->query("SELECT actor_name FROM actors WHERE actor_id = $actor_id");
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        $actors = new stdClass();
+                        $actors->actor_name = $row["actor_name"];
+                    }
+                    foreach ($actors as $actor) { ?>
+                        <li><a id="actor" href="#"><?php echo $actors->actor_name ?></a></li>
+                <?php }
+                }
+                ?>
 			</div>
 			<h3>Description</h3>
 			<div class="description">

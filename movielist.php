@@ -14,7 +14,9 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="style.css">
+    <script src="app.js"></script>
 	<title>Movie List</title>
 </head>
 <body>
@@ -60,13 +62,14 @@
             <div class="jumbotron scrollbox" id="lists">
                 <?php
                 require('includes/db.inc.php');
-                $result = $db->query("SELECT movie_image_file, movie_title, movie_description FROM movies");
+                $result = $db->query("SELECT movie_image_file, movie_title, movie_description, movie_id FROM movies");
                 $director_result = $db->query("SELECT director_name FROM directors");
                 $movies = array();
                 $directors = array();
                 if (mysqli_num_rows($result) > 0) {
                     while (($row = mysqli_fetch_assoc($result)) && ($row2 = mysqli_fetch_assoc($director_result))) {
                         $movie = new stdClass();
+                        $movie->id = $row['movie_id'];
                         $movie->imgPath = "images/".$row["movie_image_file"];
                         $movie->title = $row["movie_title"];
                         $movie->director = $row2["director_name"];
@@ -76,7 +79,7 @@
                     }
                     foreach ($movies as $movie) { ?>
                         <div class="movie">
-                        <img class="float-left" src="<?php echo $movie->imgPath ?>">
+                        <a href="moviedetails.php?role=<?= $movie->id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
                         <h4 class="float-right"><?php echo $movie->title ?></h4>
                         <p class="float-right" id="director"><?php echo $movie->director ?></p>
                         <p class="float-right" id="description">Genre: <?php echo $movie->genre ?></p>

@@ -60,16 +60,47 @@
 			<h3 id="label">Title</h3>
 			<input type="text" class="form-control" id="movie-title-input" placeholder="Enter title" name="title">
 		</div>
-		<div class="form-group">
+        <div class="form-group">
 			<h3 id="label">Director</h3>
+			<input list="directors" class="form-control" id="director-input" placeholder="Director" name="director">
+                <datalist id="directors">
+                    <?php
+                    require('includes/db.inc.php');
+                    $result = $db->query("SELECT director_name FROM directors");
+                    $directors = array();
+                    if (mysqli_num_rows($result) > 0) {
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $director = new stdClass();
+                            $director->director_name = $row["director_name"];
+                            array_push($directors, $director);
+                        }
+                        foreach ($directors as $director) { ?>
+                            <option value="<?php echo $director->director_name?>">
+                    <?php }
+                    }
+                    ?>
+                </datalist>
+		</div>
+		<div class="form-group">
+			<h3 id="label">Actors</h3>
 			<div id="actor-inputs">
-				<input list="actors" class="form-control" id="movie-actors-input" placeholder="Actor" style="margin-bottom: 0px; border-top: 1px solid black" name="director">
+				<input list="actors" class="form-control" id="movie-actors-input" placeholder="Actor" style="margin-bottom: 0px; border-top: 1px solid black" name="actor[]">
 					<datalist id="actors">
-						<option value="Chris Evans">
-						<option value="Samuel L. Jackson">
-						<option value="Josh Brolin">
-						<option value="Robert Downey Junior">
-						<option value="Will Smith">
+                        <?php
+                        require('includes/db.inc.php');
+                        $result = $db->query("SELECT actor_name FROM actors");
+                        $actors = array();
+                        if (mysqli_num_rows($result) > 0) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $actor = new stdClass();
+                                $actor->actor_name = $row["actor_name"];
+                                array_push($actors, $actor);
+                            }
+                            foreach ($actors as $actor) { ?>
+                                <option value="<?php echo $actor->actor_name?>">
+                        <?php }
+                        }
+                        ?>
 					</datalist>
 			</div>
 			<button type="button" class="btn btn-dark" onclick="addActorInput()">Add</button>
