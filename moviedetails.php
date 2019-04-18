@@ -4,7 +4,7 @@
         header("Location: ../login.php?error=signin");
         exit();
     }
-    $_SESSION['movie_id'] = $_GET['role'];
+    $_SESSION['movie_id'] = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html>
