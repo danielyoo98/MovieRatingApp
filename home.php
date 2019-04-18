@@ -77,20 +77,21 @@
                 $movie_id = $row['movie_id'];
                 $movie_result = $db->query("SELECT movie_image_file, movie_title, movie_description, movie_id FROM movies WHERE movie_id = $movie_id");
                 $director_result = $db->query("SELECT director_name FROM directors");
-                $movies = array();
+                $movies = array(); // creates an array for all of the movies
                 $directors = array();
-                if (mysqli_num_rows($result) > 0) {
-                    while (($row = mysqli_fetch_assoc($movie_result)) && ($row2 = mysqli_fetch_assoc($director_result))) {
-                        $movie = new stdClass();
+                if (mysqli_num_rows($result) > 0) { // checks to see if $result returns anything
+                    while (($row = mysqli_fetch_assoc($movie_result)) && ($row2 = mysqli_fetch_assoc($director_result))) { // if it does, it goes through each item until every item has been processed
+                        $movie = new stdClass(); // creates new class object to store properties
                         $movie->id = $row['movie_id'];
                         $movie->imgPath = "images/".$row["movie_image_file"];
                         $movie->title = $row["movie_title"];
                         $movie->director = $row2["director_name"];
                         $movie->genre = "Action";
                         $movie->description = $row["movie_description"];
-                        array_push($movies, $movie);
+                        array_push($movies, $movie); // pushes the movie instance class into array of multiple movie classes
                     }
-                    foreach ($movies as $movie) { ?>
+                    foreach ($movies as $movie) { // loops through each movie
+                        ?>
                         <div class="movie">
                         <a href="moviedetails.php?role=<?= $movie_id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
                         <h4 class="float-right"><?php echo $movie->title ?></h4>
