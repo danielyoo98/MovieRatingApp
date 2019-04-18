@@ -28,13 +28,11 @@
             if (move_uploaded_file($_FILES['file']['tmp_name'], $targetFilePath)) {
                 // insert into database
                 for ($x = 0; $x < sizeof($actors); $x++) {
-                    $insert_actor = $db->query("INSERT INTO actors (actor_name) VALUES ('$actors[$x]')");
-                }
-                $insert_director = $db->query("INSERT INTO directors (director_name) VALUES ('$director')");
-                $sql = $db->query("SELECT director_id FROM directors WHERE director_name='$director' LIMIT 1");
-                $result = mysqli_fetch_object($sql);
-                $insert_movieinfo = $db->query("INSERT INTO movies (movie_image_file, movie_title, director_id, genre, movie_description) VALUES ('$fileName', '$title', '$result->director_id', 'fun', '$desc')");
-                for ($x = 0; $x < sizeof($actors); $x++) {
+                    $check_existing_actor = $db->query("SELECT COUNT(1) FROM actors WHERE actor_name = $actors[$x]");
+                    $row = mysqli_fetch_row($check_existing_actor);
+                    if ($row[0] >= 1) {
+                        $insert_actor = $db->query("INSERT INTO actors (actor_name) VALUES ('$actors[$x]')");
+                    }
                     $result = $db->query("SELECT actor_id FROM actors WHERE actor_name = $actors[$x]");
                     mysqli_num_rows($result);
                     $row = mysqli_fetch_assoc($result);
@@ -45,6 +43,14 @@
                     $movie_id = $row2['movie_id'];
                     $insert_actor = $db->query("INSERT INTO actors_movies (actor_id, movie_id) VALUES ($actor_id, $movie_id)");
                 }
+                $check_existing_director = $db->query("SELECT COUNT(1) FROM directors WHERE director_name = $director");
+                $row = mysqli_fetch_row($check_existing_director);
+                if ($row[0] >= 1) {
+                    $insert_director = $db->query("INSERT INTO directors (director_name) VALUES ('$director')");
+                }
+                $sql = $db->query("SELECT director_id FROM directors WHERE director_name='$director' LIMIT 1");
+                $result = mysqli_fetch_object($sql);
+                $insert_movieinfo = $db->query("INSERT INTO movies (movie_image_file, movie_title, director_id, genre, movie_description) VALUES ('$fileName', '$title', '$result->director_id', 'fun', '$desc')");
                 if ($insert_director) {
                     header("Location: ../movielist.php");
                 }
