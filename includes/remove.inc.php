@@ -6,7 +6,7 @@
     $movie_id = $_SESSION['movie_id'];
     $user_id = $_SESSION['id'];
 
-    $add_movie = $db->query("INSERT INTO favourite_movies (movie_id, user_id) VALUES ($movie_id, $user_id)");
+    $delete_movie = $db->query("DELETE FROM favourite_movies WHERE movie_id = $movie_id AND user_id = $user_id");
 
-    header("Location: ../home.php?success=movieadded");
+    header("Location: ../home.php?success=moviedeleted");
 ?>

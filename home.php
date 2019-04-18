@@ -92,12 +92,12 @@
                     }
                     foreach ($movies as $movie) { ?>
                         <div class="movie">
-                        <a href="moviedetails.php?role=<? $movie_id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
+                        <a href="moviedetails.php?role=<?= $movie_id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
                         <h4 class="float-right"><?php echo $movie->title ?></h4>
                         <p class="float-right" id="director"><?php echo $movie->director ?></p>
                         <p class="float-right" id="description">Genre: <?php echo $movie->genre ?></p>
                         <p class="float-right" id="description">Description: <?php echo $movie->description ?></p>
-                        <a href="removefavourite.inc.php?role=<? $movie_id ?>"><img src="images/remove.png" style="height: 50px; width: 50px"></a>
+                        <a href="includes/remove.inc.php?role=<?= $movie_id ?>"><img src="images/remove.png" style="height: 50px; width: 50px"></a>
                         </div>
                 <?php }
                 }
