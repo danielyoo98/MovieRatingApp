@@ -62,43 +62,47 @@
                 <a href="postamovie.php">Post A Movie</a>
             </button>
             <button class="btn btn-dark btn2">
-                <a href="#">View All Posts</a>
+                <a href="movielist.php">View All Posts</a>
             </button>
         </div>
         <div class="info">
             <h3>My Movies</h3>
-            <div class="jumbotron scrollbox" id="lists">
+            <div class="jumbotron scrollbox">
                 <?php
                 $user_id = $_SESSION['id'];
                 require('includes/db.inc.php');
                 $result = $db->query("SELECT movie_id FROM favourite_movies WHERE user_id = $user_id");
                 mysqli_num_rows($result);
-                $row = mysqli_fetch_assoc($result);
-                $movie_id = $row['movie_id'];
-                $movie_result = $db->query("SELECT movie_image_file, movie_title, movie_description, movie_id FROM movies WHERE movie_id = $movie_id");
-                $director_result = $db->query("SELECT director_name FROM directors");
                 $movies = array(); // creates an array for all of the movies
                 $directors = array();
                 if (mysqli_num_rows($result) > 0) { // checks to see if $result returns anything
-                    while (($row = mysqli_fetch_assoc($movie_result)) && ($row2 = mysqli_fetch_assoc($director_result))) { // if it does, it goes through each item until every item has been processed
+                    while ($row = mysqli_fetch_assoc($result)) { // if it does, it goes through each item until every item has been processed
                         $movie = new stdClass(); // creates new class object to store properties
+                        $movie_id = $row['movie_id'];
+                        $movie_result = $db->query("SELECT movie_image_file, movie_title, movie_description, movie_id, director_id FROM movies WHERE movie_id = $movie_id");
+                        mysqli_num_rows($movie_result);
+                        $movie_result = mysqli_fetch_assoc($movie_result);
+                        $director_id = $movie_result['director_id'];
+                        $director_result = $db->query("SELECT director_name FROM directors WHERE director_id = $director_id");
+                        mysqli_num_rows($director_result);
+                        $director_result = mysqli_fetch_assoc($director_result);
                         $movie->id = $row['movie_id'];
-                        $movie->imgPath = "images/".$row["movie_image_file"];
-                        $movie->title = $row["movie_title"];
-                        $movie->director = $row2["director_name"];
+                        $movie->imgPath = "images/".$movie_result["movie_image_file"];
+                        $movie->title = $movie_result["movie_title"];
+                        $movie->director = $director_result["director_name"];
                         $movie->genre = "Action";
-                        $movie->description = $row["movie_description"];
+                        $movie->description = $movie_result["movie_description"];
                         array_push($movies, $movie); // pushes the movie instance class into array of multiple movie classes
                     }
                     foreach ($movies as $movie) { // loops through each movie
                         ?>
                         <div class="movie">
-                        <a href="moviedetails.php?role=<?= $movie_id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
-                        <h4 class="float-right"><?php echo $movie->title ?></h4>
-                        <p class="float-right" id="director"><?php echo $movie->director ?></p>
-                        <p class="float-right" id="description">Genre: <?php echo $movie->genre ?></p>
-                        <p class="float-right" id="description">Description: <?php echo $movie->description ?></p>
-                        <a href="includes/remove.inc.php?role=<?= $movie_id ?>"><img src="images/remove.png" style="height: 50px; width: 50px"></a>
+                            <a href="moviedetails.php?role=<?= $movie->id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
+                            <h4 class="float-right"><?php echo $movie->title ?></h4>
+                            <p class="float-right" id="director"><?php echo $movie->director ?></p>
+                            <p class="float-right" id="description">Genre: <?php echo $movie->genre ?></p>
+                            <p class="float-right" id="description">Description: <?php echo $movie->description ?></p>
+                            <a href="includes/remove.inc.php?role=<?= $movie->id ?>"><img src="images/remove.png" style="height: 50px; width: 50px"></a>
                         </div>
                 <?php }
                 }

@@ -90,15 +90,19 @@
                 $result = $db->query("SELECT actor_id FROM actors_movies WHERE movie_id = $movie_id");
                 mysqli_num_rows($result);
                 $row = mysqli_fetch_assoc($result);
-                $actor_id = $row['actor_id'];
-                $result = $db->query("SELECT actor_name FROM actors WHERE actor_id = $actor_id");
+                $actors = array();
                 if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)) {
-                        $actors = new stdClass();
-                        $actors->actor_name = $row["actor_name"];
+                        $actor_id = $row['actor_id'];
+                        $actor_result = $db->query("SELECT actor_name FROM actors WHERE actor_id = $actor_id");
+                        mysqli_num_rows($actor_result);
+                        $row2 = mysqli_fetch_assoc($actor_result);
+                        $actor = new stdClass();
+                        $actor->actor_name = $row2["actor_name"];
+                        array_push($actors, $actor);
                     }
                     foreach ($actors as $actor) { ?>
-                        <li><a id="actor" href="#"><?php echo $actors->actor_name ?></a></li>
+                        <li><?php echo $actor->actor_name ?></li>
                 <?php }
                 }
                 ?>
