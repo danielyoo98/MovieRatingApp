@@ -1,8 +1,12 @@
 <?php
     session_start();
-    if (!(isset($_SESSION['loggedin'])) || !($_SESSION['loggedin'] == true)) {
-        header("Location: ../login.php?error=signin");
-        exit();
-    }
-    $_SESSION['movie_id'] = $_GET['id'];
+    require('db.inc.php');
+
+    $_SESSION['movie_id'] = $_GET['role'];
+    $movie_id = $_SESSION['movie_id'];
+    $user_id = $_SESSION['id'];
+
+    $add_movie = $db->query("INSERT INTO favourite_movies (movie_id, user_id) VALUES ($movie_id, $user_id)");
+
+    header("Location: ../home.php?success=movieadded");
 ?>
