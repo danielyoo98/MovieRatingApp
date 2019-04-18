@@ -79,12 +79,12 @@
                     }
                     foreach ($movies as $movie) { ?>
                         <div class="movie">
-                        <a href="moviedetails.php?id=<?php $movie->id ?>" role="button"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
+                        <a href="moviedetails.php?role=<?= $movie->id ?>"><img class="float-left" src="<?php echo $movie->imgPath ?>"></a>
                         <h4 class="float-right"><?php echo $movie->title ?></h4>
                         <p class="float-right" id="director"><?php echo $movie->director ?></p>
                         <p class="float-right" id="description">Genre: <?php echo $movie->genre ?></p>
                         <p class="float-right" id="description">Description: <?php echo $movie->description ?></p>
-                        <a href="addtofavourite.inc.php?id=<?php $movie->id ?>" role="button"><img src="images/favourite.svg" style="height: 50px; width: 50px"></a>
+                        <a href="includes/addtofavourite.inc.php?role=<?= $movie->id ?>"><img src="images/favourite.svg" style="height: 50px; width: 50px"></a>
                         </div>
                 <?php }
                 }
